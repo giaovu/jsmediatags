@@ -10,7 +10,8 @@ describe("FLACTagReader", function() {
     ["ARTIST", "An Artist"],
     ["ALBUM", "An Album"],
     ["TRACKNUMBER", "1"],
-    ["GENRE", "A Genre"]
+    ["GENRE", "A Genre"],
+    ["COMPOSER", "A Composer"]
   ), FLACTagContents.createPictureBlock()]);
   var mediaFileReader;
   var tagReader;
@@ -43,6 +44,19 @@ describe("FLACTagReader", function() {
     }).then(function(tag) {
       var tags = tag.tags;
       expect(tags.title).toBe("A Title");
+    });
+  });
+
+  it("reads the new composer tag", function() {
+    return new Promise(function(resolve, reject) {
+      tagReader.read({
+        onSuccess: resolve,
+        onFailure: reject
+      });
+      jest.runAllTimers();
+    }).then(function(tag) {
+      var tags = tag.tags;
+      expect(tags.COMPOSER).toBe("A Composer");
     });
   });
 

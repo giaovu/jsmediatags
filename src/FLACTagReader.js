@@ -270,6 +270,7 @@ class FLACTagReader extends MediaTagReader {
     var numComments = data.getLongAt(offsetList, false);
     var dataOffset = offsetList + 4;
     var title, artist, album, track, genre, picture;
+    var others = {};
     for (let i = 0; i < numComments; i++) {
       let dataLength = data.getLongAt(dataOffset, false);
       let s = data.getStringWithCharsetAt(dataOffset + 4, dataLength, "utf-8").toString();
@@ -290,6 +291,9 @@ class FLACTagReader extends MediaTagReader {
           break;
         case "GENRE":
           genre = split[1];
+          break;
+        default:
+          others[split[0]] = split[1];
           break;
       }
       dataOffset += 4 + dataLength;
@@ -326,14 +330,14 @@ class FLACTagReader extends MediaTagReader {
     var tag = {
       type: "FLAC",
       version: "1",
-      tags: {
+      tags: Object.assign ({}, {
         "title": title,
         "artist": artist,
         "album": album,
         "track": track,
         "genre": genre,
         "picture": picture
-      }
+      }, others)
     }
     return tag;
   }
