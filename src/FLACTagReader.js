@@ -269,8 +269,9 @@ class FLACTagReader extends MediaTagReader {
      */
     var numComments = data.getLongAt(offsetList, false);
     var dataOffset = offsetList + 4;
-    var title, artist, album, track, genre, picture;
+    var title, artist, album, albumArtist, composer, track, genre, year, picture;
     var others = {};
+    var reYear = /(\d\d\d\d)/;
     for (let i = 0; i < numComments; i++) {
       let dataLength = data.getLongAt(dataOffset, false);
       let s = data.getStringWithCharsetAt(dataOffset + 4, dataLength, "utf-8").toString();
@@ -286,11 +287,25 @@ class FLACTagReader extends MediaTagReader {
         case "ALBUM":
           album = split[1];
           break;
+        case "ALBUMARTIST":
+        case "ALBUM ARTIST":
+          albumArtist = split[1];
+          break;
+        case "COMPOSER":
+          composer = split[1];
+          break;
         case "TRACKNUMBER":
           track = split[1];
           break;
         case "GENRE":
           genre = split[1];
+          break;
+        case "DATE":
+          var matchArray = reYear.exec(split[1]);
+          if (matchArray) {
+            year = matchArray[1];
+          }
+          others[split[0]] = split[1];
           break;
         default:
           others[split[0]] = split[1];
@@ -334,8 +349,11 @@ class FLACTagReader extends MediaTagReader {
         "title": title,
         "artist": artist,
         "album": album,
+        "albumArtist": albumArtist,
+        "composer": composer,
         "track": track,
         "genre": genre,
+        "year": year,
         "picture": picture
       }, others)
     }

@@ -5,12 +5,16 @@ const FLACTagContents = require('../FLACTagContents');
 const FLACTagReader = require('../FLACTagReader');
 
 describe("FLACTagReader", function() {
+  const YearValue = "2019";
+  const DateValue = YearValue + "/05/05";
   var flacFileContents = new FLACTagContents([FLACTagContents.createCommentBlock(
     ["TITLE", "A Title"],
     ["ARTIST", "An Artist"],
     ["ALBUM", "An Album"],
+    ["ALBUM ARTIST", "List of Album Artists"],
     ["TRACKNUMBER", "1"],
     ["GENRE", "A Genre"],
+    ["DATE", DateValue],
     ["COMPOSER", "A Composer"]
   ), FLACTagContents.createPictureBlock()]);
   var mediaFileReader;
@@ -47,7 +51,7 @@ describe("FLACTagReader", function() {
     });
   });
 
-  it("reads the new composer tag", function() {
+  it("reads the extra DATE tag", function() {
     return new Promise(function(resolve, reject) {
       tagReader.read({
         onSuccess: resolve,
@@ -56,7 +60,8 @@ describe("FLACTagReader", function() {
       jest.runAllTimers();
     }).then(function(tag) {
       var tags = tag.tags;
-      expect(tags.COMPOSER).toBe("A Composer");
+      expect(tags.DATE).toBe(DateValue);
+      expect(tags.year).toBe(YearValue);
     });
   });
 
@@ -85,6 +90,8 @@ describe("FLACTagReader", function() {
       expect(tags.title).toBeTruthy();
       expect(tags.artist).toBeTruthy();
       expect(tags.album).toBeTruthy();
+      expect(tags.albumArtist).toBeTruthy();
+      expect(tags.composer).toBeTruthy();
       expect(tags.track).toBeTruthy();
       expect(tags.picture).toBeTruthy();
     });

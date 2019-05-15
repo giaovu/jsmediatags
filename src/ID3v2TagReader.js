@@ -142,6 +142,8 @@ const SHORTCUTS = {
   "title"     : ["TIT2", "TT2"],
   "artist"    : ["TPE1", "TP1"],
   "album"     : ["TALB", "TAL"],
+  "albumArtist"     : ["TPE2", "TP2"],
+  "composer"  : ["TCOM", "TCM"],
   "year"      : ["TYER", "TYE"],
   "comment"   : ["COMM", "COM"],
   "track"     : ["TRCK", "TRK"],

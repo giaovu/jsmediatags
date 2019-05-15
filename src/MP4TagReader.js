@@ -342,6 +342,8 @@ const SHORTCUTS = {
   "title"     : "©nam",
   "artist"    : "©ART",
   "album"     : "©alb",
+  "albumArtist" : "aART",
+  "composer"  : "@wrt",
   "year"      : "©day",
   "comment"   : "©cmt",
   "track"     : "trkn",

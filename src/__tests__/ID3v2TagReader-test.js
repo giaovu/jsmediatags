@@ -144,6 +144,7 @@ describe("ID3v2TagReader", function() {
       jest.runAllTimers();
     }).then(function(tags) {
       expect(tags.tags.title).toBe("The title");
+      expect(tags.tags.composer).toBe("The Composer");
     });
   });
 

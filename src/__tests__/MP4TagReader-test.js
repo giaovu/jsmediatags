@@ -29,6 +29,7 @@ describe("MP4TagReader", function() {
   var mp4FileContents = createMP4FileContents([
     MP4TagContents.createMetadataAtom("©nam", "text", bin("A Title")),
     MP4TagContents.createMetadataAtom("©ART", "text", bin("A Artist")),
+    MP4TagContents.createMetadataAtom("aART", "text", bin("Album Artist")),
     MP4TagContents.createMetadataAtom("©alb", "text", bin("A Album")),
     MP4TagContents.createMetadataAtom("trkn", "uint8", [].concat(
       [0x00, 0x00],
@@ -140,6 +141,7 @@ describe("MP4TagReader", function() {
       expect("©nam" in tags).toBeTruthy();
       expect("©ART" in tags).toBeTruthy();
       expect("©alb" in tags).toBeTruthy();
+      expect("aART" in tags).toBeTruthy();
       expect("trkn" in tags).toBeTruthy();
       expect("©cmt" in tags).toBeTruthy();
       expect("cpil" in tags).toBeTruthy();
@@ -158,6 +160,7 @@ describe("MP4TagReader", function() {
       var tags = tag.tags;
       expect("artist" in tags).toBeTruthy();
       expect(tags.artist).toBe(tags["©ART"].data);
+      expect(tags.albumArtist).toBe(tags["aART"].data);
     });
   });
 
