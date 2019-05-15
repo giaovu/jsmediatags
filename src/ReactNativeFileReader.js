@@ -59,7 +59,7 @@ class ReactNativeFileReader extends MediaFileReader {
 
     RNFS.read(this._path, length, range[0], {encoding: 'base64'})
       .then(readData => {
-        const buffer = new Buffer(readData, 'base64');
+        const buffer = Buffer.from(readData, 'base64');
         const data = Array.prototype.slice.call(buffer, 0, length);
         fileData.addData(range[0], data);
         onSuccess();

@@ -72,7 +72,7 @@ class NodeFileReader extends MediaFileReader {
       fd = _fd;
       // TODO: Should create a pool of Buffer objects across all instances of
       //       NodeFileReader. This is fine for now.
-      var buffer = new Buffer(length);
+      var buffer = Buffer.alloc(length);
       fs.read(_fd, buffer, 0, length, range[0], processData);
     };
 
